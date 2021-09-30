@@ -40,8 +40,14 @@ router.post("/login",passport.authenticate("local",
 {
     
     //successRedirect:"/campgrounds",
-    failureRedirect:"/login"
+   failureRedirect:"/login"
 }), function(req,res){
+
+    // if(err)
+    // {
+    //     req.flash("error",err.message);
+    //     return(res.redirect("/login"))
+    // }
 
     req.flash("success","Welcome ! "+ req.body.username);
 
