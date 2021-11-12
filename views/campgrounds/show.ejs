@@ -2,10 +2,10 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3">
-            <p class="lead">Cheers !</p>
+            <p class="lead" style="font-family:monospace; text-align: center;">Ready for your turn?</p>
             <div class="list-group">
                 <li class="list-group-item"> <a href="#">Description</a></li>
-                <li class="list-group-item"><a href="#">Reviews</a> </li>
+                <li class="list-group-item"><a href="#review">Reviews</a> </li>
 
 
             </div>
@@ -16,7 +16,9 @@
                 <div class="caption-full"> 
                     <h4 class="pull-right"> ₹ <%= campground.price  %> / Night </h4>
                     <h4><a><%=campground.name %> </a></h4>
+                    <hr>
                     <p ><%=campground.description  %> </p> 
+                    <hr>
 
                     <p ><em>Created by <strong><%= campground.author.username  %></strong> at <%= moment(campground.CreatedAt, "YYYYMMDD").fromNow() %> </em></p>
                  
@@ -33,17 +35,44 @@
                     <% } %> 
                 </div>
             </div>
+
+
+
             <div class="well" id="review">
-                <div class="text-right">
-                    <a class="btn btn-success" href="/campgrounds/<%= campground._id  %>/comments/new ">Leave a Review</a>
+                <h1 class="text-center" style="font-family:fantasy; "><strong>Reviews</strong></h1>
+
+                <% if(!campground.comments.length){ %>
+                    <br>
+                    <h3 style="text-align: center; font-family: fantasy;">No reviews yet ! Be the first one</h3>
+                    <div class="text-right" >
+                    
+                        <a class="btn btn-success"  href="/campgrounds/<%= campground._id  %>/comments/new ">Leave a Review</a>
+                        
+                    </div>
+                    <% }else{ %> 
+                        
+                    
+                <div class="text-right" >
+                    
+                    <a class="btn btn-success"  href="/campgrounds/<%= campground._id  %>/comments/new ">Leave a Review</a>
+                    
                 </div>
+               
                 <hr>
                 <% campground.comments.forEach(function (comment) { %>
                     <div class="row">
                         <div class="col-md-12">
+
+
                             <strong><%= comment.author.username %></strong>
                             <span class="pull-right"><%= moment(comment.CreatedAt, "YYYYMMDD").fromNow() %></span>
+                            <br>
+                            <br>
+                           
                             <p>  <%= comment.text %> </p>
+
+
+                               
                             
                             <% if(currentUser && comment.author.id.equals(currentUser._id)){ %> 
                             <a class="btn btn-xs btn-warning" href="/campgrounds/<%=campground._id %>/comments/<%=comment._id  %>/edit  ">Edit</a>
@@ -51,12 +80,16 @@
                                 <input type="submit" class="btn btn-xs btn-danger" value="Delete">
 
                             </form>
+
+                            
                             <% } %> 
                             <hr>
                         </div>
                     </div>
                     
                 <% })  %> 
+
+                <% } %> 
             </div>
         </div>
     </div> 
