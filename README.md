@@ -1,4 +1,2 @@
 # YelpCamp
-# YelpCamp
-# YelpCamp
-# YelpCamp
+
